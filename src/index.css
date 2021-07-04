@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.spinner{
+  align-items: center;
+  background: #0c5460;
+  color:#fff;
+  display:flex;
+  height: 100vh;
+  justify-content: center;
+  position:relative;
+}
+.spinner>h2{
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New';
+  margin-right: 15px;
+}

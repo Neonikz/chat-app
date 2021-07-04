@@ -1,5 +1,7 @@
-import React, { createContext, useCallback, useState } from 'react';
-import { fetchWhitoutToken } from '../helpers/fetch';
+import React, { createContext, useCallback, useContext, useState } from 'react';
+import { ChatContext } from '../context/chat/ChatContext';
+import { fetchWhitoutToken, fetchWhitToken } from '../helpers/fetch';
+import { types } from '../types/types';
 
 export const AuthContext = createContext();
 
@@ -15,6 +17,7 @@ const initialState = {
 export const AuthProvider = ({children}) => {
 
     const [auth, setAuth] = useState(initialState);
+    const { dispatch } = useContext( ChatContext );
 
 
     //Funcion para logear
@@ -59,12 +62,58 @@ export const AuthProvider = ({children}) => {
         return resp.msg;
     }
 
-    const checkToken = useCallback( () => {
+    // Checkea si existe o no el token
+    const checkToken = useCallback( async() => {
+
+        const token = localStorage.getItem('token');
+
+        // Si el token no existe
+        if ( !token ){
+            setAuth({
+                checking: false,
+                logged: false,
+            })
+            return false;
+        }
+
+        const resp = await fetchWhitToken('login/renew');
+        if( resp.ok ){
+            localStorage.setItem('token',resp.token);
+            const { user } = resp
+            setAuth({                
+                uid: user.uid,
+                checking: false,
+                logged: true,
+                name: user.name,
+                email: user.email,
+            })
+            return true;
+        }else{
+            setAuth({                
+                uid: null,
+                checking: false,
+                logged: false,
+            });
+
+            return false;
+        }
 
     }, []);
 
+    //Funcion para deslogear
     const logout = () => {
-        
+        localStorage.removeItem('token');
+        //Borrar el chatState
+        dispatch({ type: types.dropChatState });
+
+        setAuth({                
+            uid: null,
+            checking: false,
+            logged: false,
+            name: null,
+            email: null,
+        })
+
     }
 
     return (

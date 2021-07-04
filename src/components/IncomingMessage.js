@@ -1,16 +1,19 @@
 import React from 'react'
+import { time } from '../helpers/time'
 
-export const IncomingMessage = () => {
+export const IncomingMessage = ({ msg }) => {
+
+    
+
     return (
          <div className="incoming_msg">
             <div className="incoming_msg_img">
-                <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil" />
+                <img src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg" alt="sunil" />
             </div>
             <div className="received_msg">
                 <div className="received_withd_msg">
-                    <p>Test which is a new approach to have all
-                        solutions</p>
-                    <span className="time_date"> 11:01 AM | June 9</span>
+                    <p>{ msg.message }</p>
+                    <span className="time_date">{ time( msg.createdAt ) }</span>
                 </div>
             </div>
         </div>

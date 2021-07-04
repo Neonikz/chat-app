@@ -1,12 +1,12 @@
 import React from 'react'
+import { time } from '../helpers/time'
 
-export const OutgoingMessage = () => {
+export const OutgoingMessage = ({ msg }) => {
     return (
         <div className="outgoing_msg">
             <div className="sent_msg">
-                <p>Test which is a new approach to have all
-                    solutions</p>
-                <span className="time_date"> 11:01 AM | June 9</span>
+                <p>{ msg.message }</p>
+                <span className="time_date"> { time( msg.createdAt ) }</span>
             </div>
         </div>
     )

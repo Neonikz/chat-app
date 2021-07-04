@@ -9,8 +9,8 @@ export const LoginPage = () => {
 
     //Estado para los valores del form
     const [ form, setForm ] = useState({
-        email:'correo@correo.com',
-        password:'123456',
+        email:'',
+        password:'',
         rememberme: false
     });
 

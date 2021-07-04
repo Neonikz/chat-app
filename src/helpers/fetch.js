@@ -20,27 +20,28 @@ const fetchWhitoutToken = async( endpoint, data, method = 'GET' ) => {
     }
 }
 
-const fetchWhitToken = ( endpoint, data, method = 'GET' ) => {
+const fetchWhitToken = async( endpoint, data, method = 'GET' ) => {
 
     const url = `${ baseUrl }/${ endpoint }`;
     const token = localStorage.getItem('token') || '';
-
     if ( method === 'GET' ) {
-        return fetch( url, {
-            method,
-            headers: {
+        const resp = await fetch( url, {
+            headers:{
                 'x-token': token
             }
         });
+        return await resp.json();
     } else {
-        return fetch( url, {
+        const resp = await fetch( url,{
             method,
             headers: {
                 'Content-type': 'application/json',
                 'x-token': token
             },
-            body: JSON.stringify( data )
+            body: JSON.stringify(data)
         });
+        return await resp.json();
+
     }
 }
 

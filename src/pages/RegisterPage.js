@@ -9,9 +9,9 @@ export const RegisterPage = () => {
 
     //Estado para los valores del form
     const [ form, setForm ] = useState({
-        name:'Nicolas',
-        email:'correo@correo.com',
-        password:'123456',
+        name:'',
+        email:'',
+        password:'',
 
     });
 
